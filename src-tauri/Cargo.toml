@@ -1,0 +1,27 @@
+[package]
+name = "emailsender"
+version = "0.1.0"
+description = "A Tauri App"
+authors = ["you"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+name = "emailsender"
+path = "src/lib.rs"
+crate-type = ["rlib", "cdylib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2.7.0", features = [] }
+
+lettre = { version = "0.10.0-rc.4", features = ["smtp-transport", "builder"] }
+tauri-plugin-opener = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+directories = "4.0"  # или актуальную версию
+
+
