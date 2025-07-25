@@ -22,8 +22,5 @@ export default defineConfig({
     watch: {
       ignored: ["**/src-tauri/**"],
     },
-  },
-  optimizeDeps: {
-    include: ['@tauri-apps/api']
   }
 });
