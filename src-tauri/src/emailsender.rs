@@ -5,6 +5,8 @@ use lettre::{
     transport::smtp::authentication::Credentials,
 };
 use serde::Deserialize;
+use std::{thread, time};
+use rand::Rng;
 
 #[derive(Deserialize)]
 pub struct EmailConfig {
@@ -19,6 +21,8 @@ pub struct EmailConfig {
     pub html_body: Option<String>,
     pub add_text_to_html: Option<bool>,
     pub text_for_html: Option<String>,
+    pub delay_min_ms: Option<u64>, // минимальная задержка в миллисекундах
+    pub delay_max_ms: Option<u64>, // максимальная задержка в миллисекундах
 }
 
 #[command]
@@ -33,6 +37,10 @@ pub fn send_bulk_email(config: EmailConfig) -> Result<String, String> {
 
     let mut success = 0;
     let mut failed = 0;
+
+    let delay_min = config.delay_min_ms.unwrap_or(500);
+    let delay_max = config.delay_max_ms.unwrap_or(1500);
+    let mut rng = rand::thread_rng();
 
     for to in &config.recipients {
         // Парсим адреса, возвращаем ошибку, если невалидные
@@ -94,6 +102,12 @@ pub fn send_bulk_email(config: EmailConfig) -> Result<String, String> {
             Ok(_) => success += 1,
             Err(_) => failed += 1,
         }
+
+        // Случайная задержка между отправками
+        let delay = rng.gen_range(delay_min..=delay_max);
+        println!("Задержка перед следующим письмом: {} мс", delay);
+
+        thread::sleep(time::Duration::from_millis(delay));
     }
 
     Ok(format!("Успешно отправлено: {}, ошибок: {}", success, failed))

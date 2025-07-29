@@ -32,10 +32,13 @@
       "icons/icon.ico"
     ]
   },
+
   "plugins": {
     "fs": {
-      "scope": ["config"]
+      "requireLiteralLeadingDot": false
     }
   }
-}
 
+
+
+}

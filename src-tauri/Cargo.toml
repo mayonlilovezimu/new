@@ -17,12 +17,18 @@ tauri-build = { version = "2", features = [] }
 
 [dependencies]
 tauri = { version = "2.7.0", features = [] }
-
+rand = "0.8"
+axum = "0.6"
+hyper = "0.14"
+http-body = "1"
+tokio = { version = "1", features = ["full"] }
 lettre = { version = "0.10.0-rc.4", features = ["smtp-transport", "builder"] }
 tauri-plugin-opener = "2"
 tauri-plugin-log = "2.6.0"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 directories = "4.0"  # или актуальную версию
+tauri-plugin-fs = "2.4.1"
+
 
 
